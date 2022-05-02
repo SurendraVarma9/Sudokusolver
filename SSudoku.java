@@ -70,6 +70,17 @@ public class SSudoku {
 		return true;
 	}
 	
+	public static boolean sudokuisvalid(int [][]m) {
+	  Set <String> set= new HashSet <>();
+	  for(int i=0;i<9;i++) {
+		  for(int j=0;j<9;j++) {
+			  if(m[i][j]!=0)
+				  if(!set.add(m[i][j]+"in row"+i)||!set.add(m[i][j]+"in column"+j)||!set.add(m[i][j]+"in box"+i/3+" "+j/3))
+					  return false;
+		  }
+	  }
+		return true;
+	}
 	public static void main(String []args) {
 		Scanner obj = new Scanner(System.in);
 		int [][]m= new int [9][9];
@@ -78,13 +89,20 @@ public class SSudoku {
 			for(int j=0;j<9;j++)
 				m[i][j]=obj.nextInt();
 		obj.close();
-	         helper(m,0,0);
+		
+	  if(sudokuisvalid(m)){	
+	   if(helper(m,0,0)) {
 		System.out.println("Solved 9*9 sudoku matrix");
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<9;j++)
 				System.out.print(m[i][j]+" ");
 			System.out.println();
+		 }
+	    }else {
+		  System.out.println("Sudoku cannot be solved");
+	    }
+	  }else {
+		  System.out.println("Sudoku is not valid");  
 	  }
-	
   }
 }
